@@ -19,6 +19,7 @@
 The Wishart mechanism in differential privacy, for producing positive semi-definite perturbed second-moment matrices
 """
 from numbers import Real
+import warnings
 
 import numpy as np
 
@@ -33,8 +34,18 @@ class Wishart(DPMechanism):
     Used to achieve differential privacy on 2nd moment matrices.
 
     Paper link: https://ieeexplore.ieee.org/abstract/document/7472095/
+
+    .. deprecated:: 0.4
+        `Wishart` is deprecated and will be removed in version 0.5. The Wishart mechanism has been shown not to satisfy
+        differential privacy, and its continued use is not recommended.
+        
     """
     def __init__(self):
+        warnings.warn("The Wishart mechanism has been shown not to satisfy differential privacy as originally "
+                      "proposed.  As a result, the Wishart mechanism is deprecated as of version 0.4, and will be "
+                      "removed in version 0.5.  To get a differentially private estimate of a covariance matrix, it is "
+                      "recommended to use `models.utils.covariance_eig` instead.", DeprecationWarning)
+
         super().__init__()
         self._sensitivity = None
 
